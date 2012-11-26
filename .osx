@@ -235,4 +235,8 @@ defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
 
+##TotalTerminal
+#Tweak to prevent extra terminal windows from opening when TT launches
+defaults write com.apple.Terminal TotalTerminalCloseWindowsOnStart -bool YES
+
 echo "Done. Note that some of these changes require a logout/restart to take effect."
