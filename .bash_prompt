@@ -2,10 +2,13 @@
 # Shamelessly copied from https://github.com/gf3/dotfiles
 # Screenshot: http://i.imgur.com/s0Blh.png
 
-if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+#If we're using OSX, there are much better terminal setups in ./osx_terminal_profiles
+if [ ${OSTYPE//[0-9.]/} != 'darwin' ]; then
+  if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
 	export TERM=gnome-256color
-elif infocmp xterm-256color >/dev/null 2>&1; then
+  elif infocmp xterm-256color >/dev/null 2>&1; then
 	export TERM=xterm-256color
+  fi
 fi
 
 if tput setaf 1 &> /dev/null; then
@@ -44,16 +47,25 @@ export BOLD
 export RESET
 
 function parse_git_dirty() {
-	[[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
+  [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
 }
 
 function parse_git_branch() {
-	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+}
+
+function git_with_parens() {
+  if [[ "$(parse_git_branch)" != '' ]]; then
+    git_output="($(parse_git_branch)) "
+  else
+    git_output="$(parse_git_branch)"
+  fi
+  echo $git_output
 }
 
 #return value visualisation
 RET_COMMAND='RET=$?'
-RET_COLOR='$(if [[ $RET = 0 ]]; then echo -ne \[$GREEN\]; else echo -ne \[$RED\]; fi;)'
+RET_COLOR='$(if [[ $RET = 0 ]]; then echo -ne \[$GREEN\]; else echo -ne \[$MAGENTA\]; fi;)'
 
 #Shorten first 3 dirs in prompt to first char only for length
 SUBS='"s!([^/])[^/]+/!\1/!"'
@@ -67,5 +79,5 @@ fi
 
 PROMPT_COMMAND="$RET_COMMAND $DIR_COMMAND"
 
-PS1="\[$GREEN\]\\h:\$CurDir\[$YELLOW\](\$(parse_git_branch))$RET_COLOR\$ \[$TXTRST\]"
+PS1="\[$GREEN\]\\h:\$CurDir\[$YELLOW\]\$(git_with_parens)$RET_COLOR\$ \[$TXTRST\]"
 
