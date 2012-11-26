@@ -3,7 +3,6 @@ alias b="bundle"
 alias bi="b install --path vendor/bundle"
 alias bu="b update"
 alias be="b exec"
-alias l='ls -lah' 
 
 # Easier navigation: .., ..., ...., and .....
 alias ..="cd .."
