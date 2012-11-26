@@ -51,7 +51,21 @@ function parse_git_branch() {
 	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
-#export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
-#export PS2="\[$ORANGE\]→ \[$RESET\]"
+#return value visualisation
+RET_COMMAND='RET=$?'
+RET_COLOR='$(if [[ $RET = 0 ]]; then echo -ne \[$GREEN\]; else echo -ne \[$RED\]; fi;)'
 
-PS1='\h:\W\$ '
+#Shorten first 3 dirs in prompt to first char only for length
+SUBS='"s!([^/])[^/]+/!\1/!"'
+
+#Account for difference between BSD and GNU sed
+if [ ${OSTYPE//[0-9.]/} == 'darwin' ]; then
+  DIR_COMMAND="CurDir=\`pwd|sed -Ee "s!$HOME!~!" -e $SUBS -e $SUBS -e $SUBS\`"
+else
+  DIR_COMMAND="CurDir=\`pwd|sed -re "s!$HOME!~!" -e $SUBS -e $SUBS -e $SUBS\`"
+fi
+
+PROMPT_COMMAND="$RET_COMMAND $DIR_COMMAND"
+
+PS1="\[$GREEN\]\\h:\$CurDir\[$YELLOW\](\$(parse_git_branch))$RET_COLOR\$ \[$TXTRST\]"
+
