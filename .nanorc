@@ -1,3 +1,5 @@
+set tabsize 2
+
 include "~/.nano/apacheconf.nanorc"
 include "~/.nano/conf.nanorc"
 include "~/.nano/c.nanorc"
