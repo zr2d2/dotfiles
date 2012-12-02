@@ -1,4 +1,5 @@
-set tabsize 2
+set tabsize  2
+set tabstospaces
 
 include "~/.nano/apacheconf.nanorc"
 include "~/.nano/conf.nanorc"
