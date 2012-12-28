@@ -1,4 +1,5 @@
 export PATH=/opt/local/bin:/opt/local/sbin:/opt/local/lib/mysql55/bin:$PATH
+export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -40,3 +41,6 @@ complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes Syste
 
 # If possible, add tab completion for many more commands
 [ -f /etc/bash_completion ] && source /etc/bash_completion
+
+# Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
