@@ -97,4 +97,5 @@ Suggestions/improvements
 * @ptb and [his _OS X Lion Setup_ repository](https://github.com/ptb/Mac-OS-X-Lion-Setup)
 * [Lauri ‘Lri’ Ranta](http://lri.me/) for sharing [loads of hidden preferences](http://lri.me/osx.html#hidden-preferences)
 * [Tim Esselens](http://devel.datif.be/)
+* August Fiekau and his [dotfiles repository](https://github.com/augustf/dotfiles)
 * anyone who [contributed a patch](https://github.com/mathiasbynens/dotfiles/contributors) or [made a helpful suggestion](https://github.com/mathiasbynens/dotfiles/issues)
