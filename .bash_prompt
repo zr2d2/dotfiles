@@ -80,4 +80,3 @@ fi
 PROMPT_COMMAND="$RET_COMMAND $DIR_COMMAND"
 
 PS1="\[$GREEN\]\\h:\$CurDir\[$YELLOW\]\$(git_with_parens)$RET_COLOR\$ \[$TXTRST\]"
-
