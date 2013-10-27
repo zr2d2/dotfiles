@@ -1,5 +1,6 @@
 export PATH=/opt/local/bin:/opt/local/sbin:/opt/local/lib/mysql55/bin:$PATH
-export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
+export PATH=/Applications/Postgres.app/Contents/MacOS/bin:$PATH
+export PATH=/Users/zach/Qt5.0.2/5.0.2/clang_64/bin/:$PATH
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -26,7 +27,12 @@ for option in autocd globstar; do
 done
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2 | tr ' ' '\n')" scp sftp ssh
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
+
+# add tab completion for git
+if [ -x /usr/local/git/bin/git ]; then
+  source ~/.git-completion.bash
+fi
 
 # Add tab completion for `defaults read|write NSGlobalDomain`
 # You could just use `-g` instead, but I like being explicit
@@ -34,9 +40,6 @@ complete -W "NSGlobalDomain" defaults
 
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall
-
-# Autocomplete Grunt commands
-which grunt > /dev/null && eval "$(grunt --completion=bash)"
 
 # If possible, add tab completion for many more commands
 [ -f /etc/bash_completion ] && source /etc/bash_completion
