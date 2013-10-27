@@ -23,7 +23,21 @@
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
-
+  # Undo a `git push`
+  undopush = push -f origin HEAD^:master
+  # Use ignore and unignore as shortcuts
+  ignore = update-index --assume-unchanged
+  unignore = update-index --no-assume-unchanged
+  # prunes local branches without remote tracking branches
+  pl = !git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <'(git branch -vv | grep origin)' | awk '{print $1}' | xargs git branch -d
+  ci = commit
+  co = checkout
+  st = status
+  br = branch
+  df = diff
+  rm-all = !git status | grep deleted | awk '{print $3}' | xargs git rm
+  add-all = !git status | grep modified | awk '{print $3}' | xargs git add
+  conflicted = !git status | grep both | awk '{print $4}' | xargs mate
 [apply]
 	# Detect whitespace errors when applying a patch
 	whitespace = fix
